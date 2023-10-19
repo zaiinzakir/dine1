@@ -1,38 +1,51 @@
-import { NavbarItemType } from '@/src/components/utils/NavbarArrayAndTypes'
-import React, { FC, useState } from 'react'
-import Link from 'next/link'
-import {PiPlusLight} from 'react-icons/pi'
-import { RiArrowDropDownLine } from 'react-icons/ri'
-import { NavbarArray,} from '@/src/components/utils/NavbarArrayAndTypes'
+import { NavbarItemType } from "@/src/components/utils/NavbarArrayAndTypes";
+import Link from "next/link";
+import React, { FC, useState } from "react";
+import { LiaPlusSquareSolid, LiaMinusSquareSolid } from "react-icons/lia";
+import { BiLinkExternal } from "react-icons/bi";
 
-
-const Expand: FC<{item: NavbarItemType }> = ({item}) => {
-    const[isExpended, setExpended] = useState(false)
-    const [isTimeOut, setTimeOut] = useState<boolean>(false)
-
-    function handleExpand() {
-        setExpended(!isExpended);
-        setTimeout(() => {
-            setTimeOut(!isTimeOut)
-        }, 100);
-    }
+const Expand: FC<{ item: NavbarItemType }> = ({ item }) => {
+  const [subitemopen, setsubitemopen] = useState<boolean>(false);
+  const [duration, setDuration] = useState<boolean>(false);
+  function handleDuration() {
+    setsubitemopen(!subitemopen);
+    setTimeout(() => {
+      setDuration(!duration);
+    }, 100);
+  }
 
   return (
-    <li className={`${isExpended? "h-40" : "h-12"} group py-2 px-3 flex flex-col items-center  rounded-md duration-300 list-none`}>
-        <button onClick={() => {handleExpand}} className='flex justify-between '>
-            <Link href={item.href}>{item.label}</Link>
-            {item.isDropDown? <PiPlusLight className='group mt-1 ml-1 'size={12} /> : ""}
-        </button>
-        
-        <div>
-            {isExpended && item.dropDownData?.map((subItem: NavbarItemType, index:number) => (
-                <Link className='hover:ml-2 rounded-md py-1 duration-300 list-item font-light text-sm' href={subItem.href}>
-                    {subItem.label}
-                </Link>
-            ))}
-        </div>
-    </li>
-    )
-}
+    <section className="text-center">
+      <li>
+        <h3 className="flex items-center justify-center gap-x-2 text-lg tracking-wide leading-relaxed scroll-m-20 mb-3 mt-3 focus:outline-none duration-300">
+          {item.label}{""}
+          {item.dropDownData ? (
+            !subitemopen ? (
+              <button className="duration-300" onClick={handleDuration}>
+                <LiaPlusSquareSolid size={22} />
+              </button>
+            ) : (
+              <button className="duration-300" onClick={handleDuration}>
+                <LiaMinusSquareSolid size={22} />
+              </button>
+            )
+          ) : (
+            <BiLinkExternal />
+          )}
+        </h3>
+        {subitemopen &&
+          item.dropDownData?.map((subitem: NavbarItemType, i: number) => (
+            <Link key={i}
+              className="flex items-center justify-center gap-x-1 bg-gray-200 text-gray-800 shadow-xl rounded-sm py-1.5 duration-300 border-b-2 border-black"
+              href={subitem.href}
+            >
+              {subitem.label}{" "}
+              <BiLinkExternal className="text-gray-600 duration-300" />
+            </Link>
+          ))}
+      </li>
+    </section>
+  );
+};
 
-export default Expand
+export default Expand;
