@@ -14,6 +14,7 @@ import MobileNavbar from './subComponents/MobileNavbar'
 
 const Navbar = () => {
     const [isNavbarOpen, setNavbarOpen] = useState<boolean>(false)
+    const [cartItemNumber, setcartItemNumber] = useState<number>(0)
     return (
         <div>
             <div className="py-6 flex justify-between item-center space-x-12">
@@ -46,7 +47,7 @@ const Navbar = () => {
                     <div className='flex-shrink-0 relative w-11 h-11 bg-gray-200 rounded-full flex items-center justify-center'>
                         <div
                             className='absolute w-4 h-4 top-0 right-0 bg-red-400 rounded-full text-xs text-white font-light flex items-center justify-center'>
-                            2
+                            {cartItemNumber}
                         </div>
                         <BsBasket3 size={29} />
                     </div>
