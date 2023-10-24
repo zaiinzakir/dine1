@@ -12,8 +12,8 @@ const Hero = () => {
 
         {/*right side*/}
         
-        <div className="bg-orange-100 w-72 h-72 rounded-full">
-            <Image src={HeroMain} alt="HeroMain" size={42}/>
+        <div className='bg-blue-50 rounded-full'>
+            <Image width={450} height={450} src={HeroMain} alt="HeroMain" />
         </div>
     </div>
   )
